@@ -531,7 +531,7 @@ void stm_commit(stm_tx_t *tx)
     assert(tx->status == TX_COMMITTED);
 }
 
-static inline void stm_abort_or_retry_helper(stm_tx_t *tx) {
+static inline __always_inline void stm_abort_or_retry_helper(stm_tx_t *tx) {
     
     /* if we are in a writethrough mode we first need to undo all changes! */
 #if defined(ADAPTIVENESS) && defined(WRITEBACK) && defined(WRITETHROUGH)

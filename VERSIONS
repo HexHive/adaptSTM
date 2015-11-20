@@ -1,3 +1,7 @@
+0.5.2 adaptSTM (2011-05-05)
+- Fixed small bug in CAS (thanks to Patrick Marlier)
+- Changed some inlining flags for newer GCC versions
+
 0.5.1 adaptSTM (2010-02-18)
 - Cleaning of Makefiles and STAMP howto added to adaptSTM
 - Added GPL2 header to all files and better directory sturcture

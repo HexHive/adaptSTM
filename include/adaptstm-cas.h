@@ -32,7 +32,7 @@ inline stm_word_t CAS(volatile stm_word_t *addr, stm_word_t old, stm_word_t new_
 #else
   __asm__ __volatile__("lock; cmpxchgl %3, %0; setz %1"
 #endif
-		       : "=m"(*addr), "=q"(result)
+		       : "=m"(*addr), "=a"(result)
 		       : "m"(*addr), "r" (new_val), "a"(old) : "memory");
   return (stm_word_t)result;
 }
