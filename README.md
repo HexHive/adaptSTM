@@ -1,5 +1,5 @@
-adaptSTM
-========
+# adaptSTM
+
 Transactional memory (TM) is an attractive platform for parallel programs,  and
 several software transactional memory (STM) designs have been presented. Here
 we explore several optimization opportunities to adapt to the running program
@@ -21,26 +21,29 @@ important parameters like write-set hash-size, hash function, and write
 strategy based on runtime statistics on a per-thread basis. Using the STAMP
 benchmarks, adaptSTM can be compared against other STM libraries.
 
-References
-==========
-Tech. report with implementation details and comparison to other STM libraries:
-* http://nebelwelt.net/index.php?id=52
 
-Project page:
-* http://nebelwelt.net/index.php?id=51
+# References
 
-Contact
-=======
+* [adaptSTM tech. report'10](http://nebelwelt.net/publications/files/10TRadaptstm.pdf) with implementation
+  details and comparison to other STM libraries.
+* [ISPASS'11 paper](http://nebelwelt.net/publications/files/11ISPASS.pdf) with a focus on performance evaluation.
+* [ISPASS'11 presentation](http://nebelwelt.net/publications/files/11ISPASS-presentation.pdf) for a quick
+  overview.
+
+
+# Contact
+
 If you have questions, problems, or bug reports please forward them to
 Mathias Payer <mathias.payer@nebelwelt.net>
 
-Installation
-============
-1) download and untar the current version of adaptSTM into a directory
-2) open the Makefile and select different optimizations
-2.2) maybe fine-tune the optimizations in adaptstm.h
-3) Run make
-4) Use lib/libadaptstm.a in your projects by including
+
+# Installation
+
+1. download and untar the current version of adaptSTM into a directory
+2. open the Makefile and select different optimizations
+   * maybe fine-tune the optimizations in adaptstm.h
+3. Run make
+4. Use lib/libadaptstm.a in your projects by including
    include/adaptstm-external.h
-5) Have fun
+5. Have fun
 
