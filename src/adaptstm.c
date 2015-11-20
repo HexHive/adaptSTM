@@ -1,3 +1,26 @@
+/**
+ * main adaptstm c file
+ * Implementation of the STM logic
+ *
+ * Copyright (c) 2010 ETH Zurich
+ *   Mathias Payer <mathias.payer@inf.ethz.ch>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA  02110-1301, USA.
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -11,9 +34,9 @@
 #endif
 
 #include "debug.h"
-#include "xxstm.h"
-#include "xxstm-cas.h"
-#include "xxstm-internal.h"
+#include "adaptstm.h"
+#include "adaptstm-cas.h"
+#include "adaptstm-internal.h"
 
 static void free_tx(stm_tx_t *tx);
 
@@ -116,7 +139,7 @@ static void free_slabs(stm_tx_t *tx, bufferslab_t *free, bufferslab_t *last)
 /* Called once (from main) to initialize STM infrastructure. */
 void stm_init()
 {
-    DEBUG_START_IMPL
+    DEBUG_START
     DPRINTF("stm init\n");
     GLOBAL_VERSION=1;
     
@@ -163,7 +186,7 @@ void stm_exit()
 #ifdef GLOBAL_STATS
     printf("Total nr of new transactions: %ld\n", xxstm_nr_tx);
 #endif
-    DEBUG_END_IMPL
+    DEBUG_END
 }
 
 /**

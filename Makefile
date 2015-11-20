@@ -1,3 +1,21 @@
+# Copyright (c) 2010 ETH Zurich
+#   Mathias Payer <mathias.payer@inf.ethz.ch>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+# MA  02110-1301, USA.
+
 # Path to fastSTM root directory
 ROOT ?= .
 
@@ -81,24 +99,16 @@ CFLAGS += -DWRITEBLOOM
 ##################################
 # variables
 ##################################
-SRCDIR = $(ROOT)
+SRCDIR = $(ROOT)/src
 LIBDIR = $(ROOT)/lib
 
-CFLAGS += -I$(SRCDIR) $(MORECFLAGS)
+CFLAGS += -I$(SRCDIR) -I$(ROOT)/include $(MORECFLAGS)
 
-LIBS = $(LIBDIR)/libfastSTM.a
+LIBS = $(LIBDIR)/libadaptSTM.a
 
-STM = xxstm
+STM = adaptstm
 
-.PHONY:	all clean tests
-
-$(SRCDIR)/libfastSTM.o:	$(SRCDIR)/$(STM).c
-	$(CC) $(CFLAGS) -c -o $@ -combine $^
-
-$(LIBDIR)/libfastSTM.a:	$(SRCDIR)/libfastSTM.o 
-#$(LIB_TCMALLOC)/lib/libtcmalloc_minimal.so
-	$(AR) cru $@ $^
-
+.PHONY:	all clean tests install docs cleanall
 
 ##################################
 # implementation
@@ -106,17 +116,16 @@ $(LIBDIR)/libfastSTM.a:	$(SRCDIR)/libfastSTM.o
 
 all:	$(LIBS)
 
-%.bc:	%.c
-	$(LLVMGCC) $(CFLAGS) -emit-llvm -c -o $@ $<
+$(SRCDIR)/libadaptSTM.o:	$(SRCDIR)/$(STM).c
+	$(CC) $(CFLAGS) -c -o $@ -combine $^
 
-$(LIBDIR)/fastSTM.bc:	$(SRCDIR)/$(STM).bc
-	$(LLVMLD) -link-as-library -o $@ $^
-
-tests:	$(LIBS)
-	$(MAKE) -C tests
+$(LIBDIR)/libadaptSTM.a:	$(SRCDIR)/libadaptSTM.o 
+#$(LIB_TCMALLOC)/lib/libtcmalloc_minimal.so
+	$(AR) cru $@ $^
 
 install: all
-	cp $(LIBDIR)/libfastSTM.a ../fastSTM/lib
+	cp $(LIBS) $(ROOT)/lib
+
 docs:
 	doxygen Doxyfile
 

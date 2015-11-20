@@ -1,0 +1,46 @@
+What is STAMP?
+==============
+STAMP is a new benchmark suite designed for Transactional Memory research. It
+currently consists of eight benchmarks with plans for more.
+* bayes: Bayesian network learning
+* genome: gene sequencing
+* intruder: network intrusion detection
+* kmeans: K-means clustering
+* labyrinth: maze routing
+* ssca2: graph kernels
+* vacation: client/server travel reservation system
+* yada: Delaunay mesh refinement (Ruppert's algorithm)
+
+STAMP: Stanford Transactional Applications for Multi-Processing 
+Chi Cao Minh, JaeWoong Chung, Christos Kozyrakis, Kunle Olukotun 
+In IISWC '08: Proceedings of The IEEE International Symposium on Workload
+Characterization, Sept. 2008. 
+http://stamp.stanford.edu/
+
+adaptSTM works perfectly fine with STAMP.
+This file describes what is needed to run adaptSTM with the STAMP benchmarks.
+
+Installation
+============
+1) Prepare the adaptSTM (configure the Makefile and run make)
+   (we assume that adaptSTM is in $(DIR)\adaptSTM
+   
+2) Download stamp-0.9.10.tar.gz from
+   http://stamp.stanford.edu/archive/stamp-0.9.10.tar.gz
+   (we assume that the tgz is in $(DIR)\benchmarks)
+   
+3) Untar the tgz with "tar -zxvf stamp-0.9.10.tar.gz" and enter the stamp
+   directory with cd "stamp-0.9.10"
+   
+4) Patch the installation using the supplied patch-file:
+   "patch -p1 < ../../adaptSTM/stamp/adaptstm-stamp-0.9.10.patch"
+   
+5) You can now build any benchmark using "make -f Makefile.astm" in all
+   benchmark directories
+   
+5) Enter a benchmark directory (e.g. intruder) with "cd labyrinth"
+   Build the benchmark with "make -f Makefile.astm"
+   Run the benchmark" "./labyrinth -i inputs/random-x512-y512-z7-n512.txt -t 2"
+
+6) Have fun benchmarking adaptSTM
+

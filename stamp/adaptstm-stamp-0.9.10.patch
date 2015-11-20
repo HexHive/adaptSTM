@@ -1,0 +1,268 @@
+diff -Nwir -U 3 stamp-0.9.10/bayes/Makefile.astm stamp-0.9.10-astm/bayes/Makefile.astm
+--- stamp-0.9.10/bayes/Makefile.astm	1970-01-01 01:00:00.000000000 +0100
++++ stamp-0.9.10-astm/bayes/Makefile.astm	2008-09-09 00:41:49.000000000 +0200
+@@ -0,0 +1,17 @@
++# ==============================================================================
++#
++# Makefile.stm
++#
++# ==============================================================================
++
++
++include ../common/Defines.common.mk
++include ./Defines.common.mk
++include ../common/Makefile.stm
++
++
++# ==============================================================================
++#
++# End of Makefile.stm
++#
++# ==============================================================================
+diff -Nwir -U 3 stamp-0.9.10/common/Makefile.astm stamp-0.9.10-astm/common/Makefile.astm
+--- stamp-0.9.10/common/Makefile.astm	1970-01-01 01:00:00.000000000 +0100
++++ stamp-0.9.10-astm/common/Makefile.astm	2010-02-18 14:20:25.000000000 +0100
+@@ -0,0 +1,41 @@
++# ==============================================================================
++#
++# Makefile.astm
++#
++# ==============================================================================
++
++
++# ==============================================================================
++# Variables
++# ==============================================================================
++
++STM := ../../../adaptSTM
++
++CFLAGS   += -DADAPTSTM -I$(STM)/include
++CPPFLAGS := $(CFLAGS)
++LDFLAGS  += -L$(STM)/lib
++LIBS     += -ladaptSTM
++
++
++# ==============================================================================
++# Rules
++# ==============================================================================
++
++.PHONY: default
++default: $(PROG)
++
++.PHONY: clean
++clean:
++	$(RM) $(OBJS) $(PROG) $(OUTPUT)
++
++$(PROG): $(OBJS)
++	$(LD) $(LDFLAGS) $^ $(LIBS) -o $(PROG)
++
++include ../common/Makefile.common
++
++
++# ==============================================================================
++#
++# End of Makefile.astm
++#
++# ==============================================================================
+diff -Nwir -U 3 stamp-0.9.10/genome/Makefile.astm stamp-0.9.10-astm/genome/Makefile.astm
+--- stamp-0.9.10/genome/Makefile.astm	1970-01-01 01:00:00.000000000 +0100
++++ stamp-0.9.10-astm/genome/Makefile.astm	2010-02-18 13:39:38.000000000 +0100
+@@ -0,0 +1,17 @@
++# ==============================================================================
++#
++# Makefile.stm
++#
++# ==============================================================================
++
++
++include ../common/Defines.common.mk
++include ./Defines.common.mk
++include ../common/Makefile.astm
++
++
++# ==============================================================================
++#
++# End of Makefile.stm
++#
++# ==============================================================================
+diff -Nwir -U 3 stamp-0.9.10/intruder/Makefile.astm stamp-0.9.10-astm/intruder/Makefile.astm
+--- stamp-0.9.10/intruder/Makefile.astm	1970-01-01 01:00:00.000000000 +0100
++++ stamp-0.9.10-astm/intruder/Makefile.astm	2010-02-18 13:39:55.000000000 +0100
+@@ -0,0 +1,17 @@
++# ==============================================================================
++#
++# Makefile.stm
++#
++# ==============================================================================
++
++
++include ../common/Defines.common.mk
++include ./Defines.common.mk
++include ../common/Makefile.astm
++
++
++# ==============================================================================
++#
++# End of Makefile.stm
++#
++# ==============================================================================
+diff -Nwir -U 3 stamp-0.9.10/kmeans/Makefile.astm stamp-0.9.10-astm/kmeans/Makefile.astm
+--- stamp-0.9.10/kmeans/Makefile.astm	1970-01-01 01:00:00.000000000 +0100
++++ stamp-0.9.10-astm/kmeans/Makefile.astm	2010-02-18 13:39:47.000000000 +0100
+@@ -0,0 +1,17 @@
++# ==============================================================================
++#
++# Makefile.stm
++#
++# ==============================================================================
++
++
++include ../common/Defines.common.mk
++include ./Defines.common.mk
++include ../common/Makefile.astm
++
++
++# ==============================================================================
++#
++# End of Makefile.stm
++#
++# ==============================================================================
+diff -Nwir -U 3 stamp-0.9.10/labyrinth/Makefile.astm stamp-0.9.10-astm/labyrinth/Makefile.astm
+--- stamp-0.9.10/labyrinth/Makefile.astm	1970-01-01 01:00:00.000000000 +0100
++++ stamp-0.9.10-astm/labyrinth/Makefile.astm	2010-02-18 11:26:09.000000000 +0100
+@@ -0,0 +1,17 @@
++# ==============================================================================
++#
++# Makefile.stm
++#
++# ==============================================================================
++
++
++include ../common/Defines.common.mk
++include ./Defines.common.mk
++include ../common/Makefile.astm
++
++
++# ==============================================================================
++#
++# End of Makefile.stm
++#
++# ==============================================================================
+diff -Nwir -U 3 stamp-0.9.10/lib/tm.h stamp-0.9.10-astm/lib/tm.h
+--- stamp-0.9.10/lib/tm.h	2008-09-09 00:42:42.000000000 +0200
++++ stamp-0.9.10-astm/lib/tm.h	2010-02-18 14:37:45.000000000 +0100
+@@ -453,6 +453,40 @@
+ 
+ #  endif /* !OTM */
+ 
++/* =============================================================================
++ * adaptSTM - adaptSTM Software Transactional Memory
++ * =============================================================================
++ */
++
++#elif defined(ADAPTSTM)
++
++#  include <string.h>
++#  include <stm.h>
++#  include "thread.h"
++
++#  define TM_ARG                        STM_SELF,
++#  define TM_ARG_ALONE                  STM_SELF
++#  define TM_ARGDECL                    STM_THREAD_T* TM_ARG
++#  define TM_ARGDECL_ALONE              STM_THREAD_T* TM_ARG_ALONE
++#  define TM_CALLABLE                   /* nothing */
++
++#  define TM_STARTUP(numThread)         STM_STARTUP();
++#  define TM_SHUTDOWN()                 STM_SHUTDOWN();
++
++#  define TM_THREAD_ENTER()             TM_ARGDECL_ALONE = STM_NEW_THREAD();
++#  define TM_THREAD_EXIT()              STM_FREE_THREAD();
++
++#  define P_MALLOC(size)                malloc(size)
++#  define P_FREE(ptr)                   free(ptr)
++#  define TM_MALLOC(size)               STM_MALLOC(size);
++#  define TM_FREE(ptr)                  STM_FREE(ptr);
++
++#  define TM_BEGIN()                    STM_BEGIN(); {
++#  define TM_BEGIN_RO()                 STM_BEGIN(); {
++#  define TM_END()                      } STM_END()
++#  define TM_RESTART()                  STM_RESTART()
++#  define TM_EARLY_RELEASE(var)         /* nothing */
++
+ 
+ /* =============================================================================
+  * Sequential execution
+@@ -513,6 +547,10 @@
+  * 3) _F suffix: for accessing variables of type "float"
+  * =============================================================================
+  */
++#if defined (ADAPTSTM)
++#  define STM 1
++#endif
++
+ #if defined(STM)
+ 
+ #if defined(OTM)
+diff -Nwir -U 3 stamp-0.9.10/ssca2/Makefile.astm stamp-0.9.10-astm/ssca2/Makefile.astm
+--- stamp-0.9.10/ssca2/Makefile.astm	1970-01-01 01:00:00.000000000 +0100
++++ stamp-0.9.10-astm/ssca2/Makefile.astm	2010-02-18 13:39:51.000000000 +0100
+@@ -0,0 +1,17 @@
++# ==============================================================================
++#
++# Makefile.stm
++#
++# ==============================================================================
++
++
++include ../common/Defines.common.mk
++include ./Defines.common.mk
++include ../common/Makefile.astm
++
++
++# ==============================================================================
++#
++# End of Makefile.stm
++#
++# ==============================================================================
+diff -Nwir -U 3 stamp-0.9.10/vacation/Makefile.astm stamp-0.9.10-astm/vacation/Makefile.astm
+--- stamp-0.9.10/vacation/Makefile.astm	1970-01-01 01:00:00.000000000 +0100
++++ stamp-0.9.10-astm/vacation/Makefile.astm	2010-02-18 13:39:44.000000000 +0100
+@@ -0,0 +1,17 @@
++# ==============================================================================
++#
++# Makefile.stm
++#
++# ==============================================================================
++
++
++include ../common/Defines.common.mk
++include ./Defines.common.mk
++include ../common/Makefile.astm
++
++
++# ==============================================================================
++#
++# End of Makefile.stm
++#
++# ==============================================================================
+diff -Nwir -U 3 stamp-0.9.10/yada/Makefile.astm stamp-0.9.10-astm/yada/Makefile.astm
+--- stamp-0.9.10/yada/Makefile.astm	1970-01-01 01:00:00.000000000 +0100
++++ stamp-0.9.10-astm/yada/Makefile.astm	2010-02-18 13:39:41.000000000 +0100
+@@ -0,0 +1,17 @@
++# ==============================================================================
++#
++# Makefile.stm
++#
++# ==============================================================================
++
++
++include ../common/Defines.common.mk
++include ./Defines.common.mk
++include ../common/Makefile.astm
++
++
++# ==============================================================================
++#
++# End of Makefile.stm
++#
++# ==============================================================================

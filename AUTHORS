@@ -1,0 +1,22 @@
+Hall of fame
+============
+Mathias Payer <mathias.payer@nebelwelt.net>
+- Main contributor and head of development for current versions
+- Developer of adaptSTM including different adaptation features
+
+Stephan Classen <scl@soft-eng.ch>
+- Main code monkey of the libSTM version
+- Wrote his master thesis about STM libraries and different buffer
+  implementations
+
+Peter Suter <suterpet@student.ethz.ch>
+- GCC hacking using LibSTM and several extensions
+- Compiler extensions for STM systems
+- Wrote his master thesis about interactions between STM libraries and 
+  compilers
+
+Olivier Saurer <saurero@student.ethz.ch>
+- Extension of LibSTM buffer structures and implementation of
+  write-through and write-back
+- Wrote his semester thesis about buffer optimizations and buffer interfaces
+
